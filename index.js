@@ -1,4 +1,5 @@
 const express = require('express');
+const DB = require('./DB/connection');
 
 const app = express();
 
@@ -32,9 +33,7 @@ app.delete("/api/delete-books/:id",(req,res)=>{
 })
 
 
-
-
-
+DB();
 app.listen(5000,()=>{
     console.log("Server Is Running !")
 })
