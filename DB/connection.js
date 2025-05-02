@@ -1,7 +1,8 @@
 const {Sequelize,DataTypes,} = require("sequelize");
+
 require('dotenv').config();
 
-const DB = ()=>{
+
     
 const sequelize = new Sequelize(process.env.DB_URL);
 
@@ -10,6 +11,19 @@ sequelize.authenticate().then(()=>{
 }).catch((e)=>{
     console.log("Error : ",e);
 })
-}
 
-module.exports = DB;
+
+
+const db = {}
+
+db.Sequelize = Sequelize
+db.sequelize = sequelize
+db.books = require("./models/book.model")(sequelize,DataTypes);
+db.users =require("./models/user.model")(sequelize,DataTypes);
+
+sequelize.sync({force:true}).then(()=>{
+    console.log("Migration Success !");
+})
+
+
+module.exports = db;
